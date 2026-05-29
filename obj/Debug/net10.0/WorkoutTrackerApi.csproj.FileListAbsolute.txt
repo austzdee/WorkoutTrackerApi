@@ -9,7 +9,6 @@
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/BCrypt-Net-Next.dll
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Humanizer.dll
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
-/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Microsoft.Build.Framework.dll
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Microsoft.CodeAnalysis.dll
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/Microsoft.CodeAnalysis.CSharp.dll
