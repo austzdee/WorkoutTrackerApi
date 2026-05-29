@@ -1,13 +1,17 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WorkoutTrackerApi.Dtos;
+
 // Data required to update a workout plan
 public class UpdateWorkoutPlanDto
 {
-    // Update Workout title
+    [Required]
+    [MaxLength(100)]
     public string Title { get; set; } = string.Empty;
 
-    // Optional workout notes/comments
+    [MaxLength(500)]
     public string? Notes { get; set; }
 
-    // Scheduled workout date/time
+    [Required]
     public DateTime ScheduledDate { get; set; }
 }
