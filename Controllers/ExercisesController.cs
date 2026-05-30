@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using WorkoutTrackerApi.Data;
 using WorkoutTrackerApi.Dtos;
-using WorkoutTrackerApi.Models;
+using WorkoutTrackerApi.Services;
 
 namespace WorkoutTrackerApi.Controllers;
 
@@ -14,11 +12,11 @@ namespace WorkoutTrackerApi.Controllers;
 [Authorize]
 public class ExercisesController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IExerciseService _exerciseService;
 
-    public ExercisesController(AppDbContext context)
+    public ExercisesController(IExerciseService exerciseService)
     {
-        _context = context;
+        _exerciseService = exerciseService;
     }
 
     // POST: api/workoutplans/{workoutPlanId}/exercises
@@ -29,27 +27,13 @@ public class ExercisesController : ControllerBase
     {
         var userId = GetCurrentUserId();
 
-        var workoutExists = await _context.WorkoutPlans
-            .AnyAsync(w => w.Id == workoutPlanId && w.UserId == userId);
+        var exercise = await _exerciseService.AddExerciseAsync(
+            userId,
+            workoutPlanId,
+            request
+        );
 
-        if (!workoutExists)
-        {
-            return NotFound("Workout plan not found.");
-        }
-
-        var exercise = new Exercise
-        {
-            Name = request.Name.Trim(),
-            Sets = request.Sets,
-            Reps = request.Reps,
-            Weight = request.Weight,
-            WorkoutPlanId = workoutPlanId
-        };
-
-        _context.Exercises.Add(exercise);
-        await _context.SaveChangesAsync();
-
-        return Ok(MapToExerciseResponse(exercise));
+        return Ok(exercise);
     }
 
     // GET: api/workoutplans/{workoutPlanId}/exercises
@@ -59,46 +43,92 @@ public class ExercisesController : ControllerBase
     {
         var userId = GetCurrentUserId();
 
-        var workoutExists = await _context.WorkoutPlans
-            .AnyAsync(w => w.Id == workoutPlanId && w.UserId == userId);
+        var exercises = await _exerciseService.GetExercisesAsync(
+            userId,
+            workoutPlanId
+        );
 
-        if (!workoutExists)
+        if (exercises is null)
         {
             return NotFound("Workout plan not found.");
         }
 
-        var exercises = await _context.Exercises
-            .AsNoTracking()
-            .Where(e => e.WorkoutPlanId == workoutPlanId)
-            .Select(e => new ExerciseResponseDto
-            {
-                Id = e.Id,
-                Name = e.Name,
-                Sets = e.Sets,
-                Reps = e.Reps,
-                Weight = e.Weight
-            })
-            .ToListAsync();
-
         return Ok(exercises);
     }
 
+    // GET: api/workoutplans/{workoutPlanId}/exercises/{exerciseId}
+    [HttpGet("{exerciseId:int}")]
+    public async Task<ActionResult<ExerciseResponseDto>> GetExerciseById(
+        int workoutPlanId,
+        int exerciseId)
+    {
+        var userId = GetCurrentUserId();
+
+        var exercise = await _exerciseService.GetExerciseByIdAsync(
+            userId,
+            workoutPlanId,
+            exerciseId
+        );
+
+        if (exercise is null)
+        {
+            return NotFound("Exercise not found.");
+        }
+
+        return Ok(exercise);
+    }
+
+    // PUT: api/workoutplans/{workoutPlanId}/exercises/{exerciseId}
+    [HttpPut("{exerciseId:int}")]
+    public async Task<ActionResult<ExerciseResponseDto>> UpdateExercise(
+        int workoutPlanId,
+        int exerciseId,
+        UpdateExerciseDto request)
+    {
+        var userId = GetCurrentUserId();
+
+        var exercise = await _exerciseService.UpdateExerciseAsync(
+            userId,
+            workoutPlanId,
+            exerciseId,
+            request
+        );
+
+        if (exercise is null)
+        {
+            return NotFound("Exercise not found.");
+        }
+
+        return Ok(exercise);
+    }
+
+    // DELETE: api/workoutplans/{workoutPlanId}/exercises/{exerciseId}
+    [HttpDelete("{exerciseId:int}")]
+    public async Task<IActionResult> DeleteExercise(
+        int workoutPlanId,
+        int exerciseId)
+    {
+        var userId = GetCurrentUserId();
+
+        var deleted = await _exerciseService.DeleteExerciseAsync(
+            userId,
+            workoutPlanId,
+            exerciseId
+        );
+
+        if (!deleted)
+        {
+            return NotFound("Exercise not found.");
+        }
+
+        return NoContent();
+    }
+
+    // Extract authenticated user ID from JWT claims
     private int GetCurrentUserId()
     {
         return int.Parse(
             User.FindFirstValue(ClaimTypes.NameIdentifier)!
         );
-    }
-
-    private static ExerciseResponseDto MapToExerciseResponse(Exercise exercise)
-    {
-        return new ExerciseResponseDto
-        {
-            Id = exercise.Id,
-            Name = exercise.Name,
-            Sets = exercise.Sets,
-            Reps = exercise.Reps,
-            Weight = exercise.Weight
-        };
     }
 }

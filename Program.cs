@@ -85,6 +85,8 @@ builder.Services.AddControllers();
 // Register application services
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
+
 var app = builder.Build();
 
 // Enable global exception handling
