@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using WorkoutTrackerApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,6 +82,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+// Enable global exception handling
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 // Enable Swagger UI in development
 if (app.Environment.IsDevelopment())
