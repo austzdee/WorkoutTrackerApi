@@ -84,6 +84,7 @@ builder.Services.AddControllers();
 
 // Register application services
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
 
