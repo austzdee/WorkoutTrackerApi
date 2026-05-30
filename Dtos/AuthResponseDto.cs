@@ -3,7 +3,7 @@ namespace WorkoutTrackerApi.Dtos;
 // Authentication response returned to client
 public class AuthResponseDto
 {
-    // JWT token
+    // JWT tokenl
     public string Token { get; set; } = string.Empty;
 
     // User email

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using WorkoutTrackerApi.Middleware;
+using WorkoutTrackerApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,9 @@ builder.Services.AddAuthentication(options =>
 
 // Add controller support
 builder.Services.AddControllers();
+
+// Register application services
+builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 
 var app = builder.Build();
 
