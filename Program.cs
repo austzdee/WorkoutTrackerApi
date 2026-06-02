@@ -18,7 +18,6 @@ builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
-// Configure CORS policy for frontend applications.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
@@ -99,6 +98,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Apply pending EF Core migrations on startup.
+// This creates/updates the hosted SQLite database schema on Render.
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
