@@ -124,4 +124,15 @@ app.MapGet("/", () => Results.Ok("WorkoutTrackerApi is running"));
 
 app.MapControllers();
 
+app.MapGet("/db-check", async (AppDbContext dbContext) =>
+{
+    var userCount = await dbContext.Users.CountAsync();
+
+    return Results.Ok(new
+    {
+        Database = "Connected",
+        Users = userCount
+    });
+});
+
 app.Run();
