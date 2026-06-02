@@ -26,7 +26,7 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins(
                 "http://localhost:5173",
-                "https://your-frontend-domain.vercel.app"
+                "https://workout-tracker-client-seven.vercel.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod();
