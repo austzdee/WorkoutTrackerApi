@@ -3,15 +3,19 @@ namespace WorkoutTrackerApi.Dtos;
 // Data returned when fetching a workout plan
 public class WorkoutPlanResponseDto
 {
-    // Workout ID
+    // Unique identifier for the workout plan.
     public int Id { get; set; }
 
-    // Workout title
+    // Display title for the workout plan.
     public string Title { get; set; } = string.Empty;
 
-    // Optional workout notes/comments
+    // Optional notes or comments attached to the workout plan.
     public string? Notes { get; set; }
 
-    // Scheduled workout date/time
+    // Date and time when the workout is scheduled.
     public DateTime ScheduledDate { get; set; }
+
+    // Exercises that belong to this workout plan.
+    public List<ExerciseResponseDto> Exercises { get; set; } = [];
+    
 }

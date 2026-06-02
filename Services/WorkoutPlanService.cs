@@ -5,7 +5,7 @@ using WorkoutTrackerApi.Models;
 
 namespace WorkoutTrackerApi.Services;
 
-// Handles workout plan business logic
+// Handles workout plan business logic.
 public class WorkoutPlanService : IWorkoutPlanService
 {
     private readonly AppDbContext _context;
@@ -48,7 +48,8 @@ public class WorkoutPlanService : IWorkoutPlanService
         return MapToResponse(workout);
     }
 
-    public async Task<IEnumerable<WorkoutPlanResponseDto>> GetWorkoutsAsync(int userId)
+    public async Task<IEnumerable<WorkoutPlanResponseDto>> GetWorkoutsAsync(
+        int userId)
     {
         _logger.LogInformation(
             "Fetching workout plans for user {UserId}",
@@ -64,7 +65,21 @@ public class WorkoutPlanService : IWorkoutPlanService
                 Id = w.Id,
                 Title = w.Title,
                 Notes = w.Notes,
-                ScheduledDate = w.ScheduledDate
+                ScheduledDate = w.ScheduledDate,
+
+                // Include exercises so the frontend can render workout details
+                // without making a separate request per workout.
+                Exercises = w.Exercises
+                    .Select(e => new ExerciseResponseDto
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        Sets = e.Sets,
+                        Reps = e.Reps,
+                        Weight = e.Weight,
+                        
+                    })
+                    .ToList()
             })
             .ToListAsync();
     }
@@ -87,7 +102,20 @@ public class WorkoutPlanService : IWorkoutPlanService
                 Id = w.Id,
                 Title = w.Title,
                 Notes = w.Notes,
-                ScheduledDate = w.ScheduledDate
+                ScheduledDate = w.ScheduledDate,
+
+                // Return the exercises that belong to this workout plan.
+                Exercises = w.Exercises
+                    .Select(e => new ExerciseResponseDto
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        Sets = e.Sets,
+                        Reps = e.Reps,
+                        Weight = e.Weight,
+                        
+                    })
+                    .ToList()
             })
             .FirstOrDefaultAsync();
     }
@@ -98,6 +126,7 @@ public class WorkoutPlanService : IWorkoutPlanService
         UpdateWorkoutPlanDto request)
     {
         var workout = await _context.WorkoutPlans
+            .Include(w => w.Exercises)
             .FirstOrDefaultAsync(w => w.Id == workoutId && w.UserId == userId);
 
         if (workout is null)
@@ -167,7 +196,20 @@ public class WorkoutPlanService : IWorkoutPlanService
             Id = workout.Id,
             Title = workout.Title,
             Notes = workout.Notes,
-            ScheduledDate = workout.ScheduledDate
+            ScheduledDate = workout.ScheduledDate,
+
+            // Map nested exercises into response DTOs.
+            Exercises = workout.Exercises
+                .Select(e => new ExerciseResponseDto
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    Sets = e.Sets,
+                    Reps = e.Reps,
+                    Weight = e.Weight,
+                    
+                })
+                .ToList()
         };
     }
 }

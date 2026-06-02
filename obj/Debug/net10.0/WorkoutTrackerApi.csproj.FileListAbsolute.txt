@@ -158,3 +158,10 @@
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/obj/Debug/net10.0/WorkoutTrackerApi.pdb
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/obj/Debug/net10.0/WorkoutTrackerApi.genruntimeconfig.cache
 /Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/obj/Debug/net10.0/ref/WorkoutTrackerApi.dll
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/package-lock.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/package.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/workout-tracker-client/package-lock.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/workout-tracker-client/package.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/workout-tracker-client/tsconfig.app.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/workout-tracker-client/tsconfig.json
+/Users/austz/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/WorkoutTrackerApi/bin/Debug/net10.0/workout-tracker-client/tsconfig.node.json
