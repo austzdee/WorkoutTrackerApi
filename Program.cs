@@ -11,8 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
@@ -100,7 +102,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // Apply pending EF Core migrations on startup.
-// This creates/updates the hosted SQLite database schema on Render.
+// This creates/updates the hosted PostgreSQL database schema on Render.
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
