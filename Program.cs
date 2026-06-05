@@ -137,4 +137,18 @@ app.MapGet("/db-check", async (AppDbContext dbContext) =>
     });
 });
 
+app.MapGet("/debug/users", async (AppDbContext dbContext) =>
+{
+    var users = await dbContext.Users
+        .Select(user => new
+        {
+            user.Id,
+            user.FullName,
+            user.Email
+        })
+        .ToListAsync();
+
+    return Results.Ok(users);
+});
+
 app.Run();
