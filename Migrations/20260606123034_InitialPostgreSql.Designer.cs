@@ -11,8 +11,8 @@ using WorkoutTrackerApi.Data;
 namespace WorkoutTrackerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260605211612_PostgreSqlMigration")]
-    partial class PostgreSqlMigration
+    [Migration("20260606123034_InitialPostgreSql")]
+    partial class InitialPostgreSql
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
