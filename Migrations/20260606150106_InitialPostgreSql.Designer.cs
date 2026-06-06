@@ -12,7 +12,7 @@ using WorkoutTrackerApi.Data;
 namespace WorkoutTrackerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260606132756_InitialPostgreSql")]
+    [Migration("20260606150106_InitialPostgreSql")]
     partial class InitialPostgreSql
     {
         /// <inheritdoc />

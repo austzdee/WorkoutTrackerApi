@@ -1,9 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace WorkoutTrackerApi.Models;
 
 // Represents an exercise inside a workout plan
 public class Exercise
 {
-    // Primary Key
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     // Exercise name
