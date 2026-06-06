@@ -142,7 +142,7 @@ public class WorkoutPlanService : IWorkoutPlanService
 
         workout.Title = request.Title.Trim();
         workout.Notes = request.Notes?.Trim();
-        workout.ScheduledDate = request.ScheduledDate;
+       workout.ScheduledDate = DateTime.SpecifyKind(request.ScheduledDate, DateTimeKind.Utc);
 
         await _context.SaveChangesAsync();
 
