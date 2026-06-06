@@ -11,7 +11,9 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         // Configure SQLite connection for migrations
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-        optionsBuilder.UseSqlite("Data Source=WorkoutTracker.db");
+        optionsBuilder.UseNpgsql(
+    "Host=localhost;Port=5432;Database=WorkoutTrackerDb;Username=postgres;Password=postgres"
+);
 
         return new AppDbContext(optionsBuilder.Options);
     }
