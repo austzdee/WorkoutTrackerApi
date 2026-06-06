@@ -6,6 +6,8 @@ using Microsoft.OpenApi.Models;
 using WorkoutTrackerApi.Data;
 using WorkoutTrackerApi.Middleware;
 using WorkoutTrackerApi.Services;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,10 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
- options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options
+        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .ConfigureWarnings(warnings =>
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
 
 builder.Services.AddScoped<IWorkoutPlanService, WorkoutPlanService>();
 builder.Services.AddScoped<IExerciseService, ExerciseService>();
