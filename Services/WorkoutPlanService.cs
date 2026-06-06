@@ -32,7 +32,10 @@ public class WorkoutPlanService : IWorkoutPlanService
         {
             Title = request.Title.Trim(),
             Notes = request.Notes?.Trim(),
-            ScheduledDate = request.ScheduledDate,
+            ScheduledDate = DateTime.SpecifyKind(
+            request.ScheduledDate,
+            DateTimeKind.Utc
+            ),
             UserId = userId
         };
 
@@ -77,7 +80,7 @@ public class WorkoutPlanService : IWorkoutPlanService
                         Sets = e.Sets,
                         Reps = e.Reps,
                         Weight = e.Weight,
-                        
+
                     })
                     .ToList()
             })
@@ -113,7 +116,7 @@ public class WorkoutPlanService : IWorkoutPlanService
                         Sets = e.Sets,
                         Reps = e.Reps,
                         Weight = e.Weight,
-                        
+
                     })
                     .ToList()
             })
@@ -142,7 +145,7 @@ public class WorkoutPlanService : IWorkoutPlanService
 
         workout.Title = request.Title.Trim();
         workout.Notes = request.Notes?.Trim();
-       workout.ScheduledDate = DateTime.SpecifyKind(request.ScheduledDate, DateTimeKind.Utc);
+        workout.ScheduledDate = DateTime.SpecifyKind(request.ScheduledDate, DateTimeKind.Utc);
 
         await _context.SaveChangesAsync();
 
@@ -207,7 +210,7 @@ public class WorkoutPlanService : IWorkoutPlanService
                     Sets = e.Sets,
                     Reps = e.Reps,
                     Weight = e.Weight,
-                    
+
                 })
                 .ToList()
         };
